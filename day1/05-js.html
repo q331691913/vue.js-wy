@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <span>数值A：<input type="text" class="a"></span></br>
+    <span>数值B：<input type="text" class="b"></span></br>
+    <button class="btn">计算</button>
+    <span class="res">   </span>
+    <script>
+        let a = document.querySelector('.a')
+        let b = document.querySelector('.b')
+        let btn = document.querySelector('.btn')
+        let res = document.querySelector('.res')
+        btn.onclick = function() {
+            // console.log(a.value);
+            let result = parseInt(a.value) + parseInt(b.value)
+            console.log(result);
+            res.innerHTML = `<i>计算结果:  ${result}</i>`
+
+
+        }
+    </script>
+</body>
+
+</html>

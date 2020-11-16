@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div :style="objClass"></div>
+        <div :style="{width:widthStyle,height:heightStyle,border:borderStyle}"></div>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                widthStyle: '100px',
+                heightStyle: '100px',
+                borderStyle: '1px solid red',
+                objClass: {
+                    border: '1px solid blue',
+                    width: '200px',
+                    height: '200px'
+                }
+            },
+            methods: {
+
+            },
+        })
+    </script>
+</body>
+
+</html>
