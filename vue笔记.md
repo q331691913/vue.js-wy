@@ -1,0 +1,391 @@
+````vue
+//**mustache语法，不仅仅跨域直接写变量，也跨域写简单的表达式**
+h2{{firstName+lastName}}h2
+counter =100
+h2{{counter*2}}h2
+
+````
+
+**v-once指令**：只执行一次，后面改变了值带了v-once的不改变
+
+**v-html=""**    ：   解析带有html标签的数据
+
+**v-pre指令** :  是什么就显示什么不解析
+
+**v-cloak指令 ：** 有无这个属性决定后面的vue执行 相当于遮罩
+
+
+
+# v-bind指令
+
+作用:动态绑定属性,可以缩写成:
+
+````html
+<body>
+    <div id="app">
+        <h2>{{message}}</h2>
+        <img v-bind:src="imgURL" alt="">
+        <img v-bind:src="imgURL1" alt="">
+
+    </div>
+    <script src="vue.js"></script>
+
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: '你好',
+                imgURL: 'https://img14.360buyimg.com/seckillcms/s280x280_jfs/t1/127725/21/18231/199082/5face398E97af9b8f/1b8d1f92a5b507b0.jpg.webp',
+                imgURL1: 'https://cn.vuejs.org/images/logo.png'
+
+            }
+        })
+    </script>
+</body>
+````
+
+**v-bind动态绑定class**
+
+**数组和对象语法**
+
+````html
+<body>
+    <div id="app">
+        <h2 class="active">{{message}}</h2>
+        <h2 :class="{active:isActive,line:isLine}">{{message}}</h2>
+
+        <button v-on:click='btnclick'>按钮</button>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: '你好',
+                isActive: true,
+                isLine: true
+
+            },
+            methods: {
+                btnclick: function() {
+                    this.isActive = !this.isActive
+                }
+            }
+        })
+    </script>
+</body>
+````
+
+**认识Vuejs**
+
+- 为什么学习vuejs
+- vue的读音
+- vue的渐进式
+- vue的特点
+
+**mustache语法**-vue的响应式
+
+Vue列表展示
+
+- v-for
+- 后面给数组追加的元素的时候，新的元素爷可以在界面中渲染出来
+
+Vue计数器小案例
+
+- 事件监听:click->methods
+
+  创建vue时，options可以放那些东西
+
+  - el:
+
+  - data:
+
+  - methods
+
+  - computed 
+
+  - 生命周期
+  
+    
+
+**插值语法**
+
+- mustache语法
+
+- v-once 执行一次
+
+- v-html 解析html标签
+
+- v-text 解析文本
+
+- v-pre:{{}} 不解析
+
+- v-cloack:斗篷 遮罩
+
+  
+
+v-**bind**
+
+v-bnd 语法糖:
+
+:href
+
+**v-bind动态绑定基本属性**
+
+- 对象语法
+- 数组语法
+
+**计算属性**
+
+firstName+lastName
+
+# v-on的修饰符
+
+````js
+@click.stop //阻止冒泡
+@click.prevent="btnsubmit"  //取消默认
+@keyup.enter=''  //监听键盘的enter
+@click.once   // 只让点击一次
+
+````
+
+# v-if的使用
+
+在切换时元素及它的数据绑定 / 组件被销毁并重建。如果元素是 template ，将提出它的内容作为条件块。
+多使用template,页面上没有template. 提高性能
+
+````js
+<body>
+    <div id="app">
+        <h2 v-if="true">{{message}}</h2>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                message: '你好啊！'
+            }
+        })
+    </script>
+</body>
+````
+
+# v-show的使用
+
+他只是给我们的元素添加了一个行内样式
+
+splice(2,0,'f') //第三个参数是在第二个元素的后面添加一个f
+
+````js
+push() //在数组最后添加
+pop() //删除数组中最后一个元素
+shift() //删除数组中的第一个元素
+unshift() //在数组的最前面添加元素
+splice() //删除第几个，一共删除几个，写0 第三个参数就是添加
+sort()   //排序
+reverse() // 翻转数组
+slice(start,end)
+tofixed() //保留几位小数
+desabled // 禁止按钮使用
+forEach()  //迭代遍历数组
+map() //map 用于操作或转换数组中的值 
+every() //判断数组中值是否都满足条件 相当于&&的关系如果数组中检测到有一个元素不满足，则整个表达式返回 false ，且剩余的元素不会再进行检测。如果所有元素都满足条件，则返回 true。
+some() //some 与every相对，是否存在某个值满足条件  相当于||的关系  (返回值为Boolean模式)
+fifter()//筛选数组，返回数组
+````
+
+
+
+.stop - 调用 event.stopPropagation()。
+.prevent - 调用 event.preventDefault()。
+.capture - 添加事件侦听器时使用 capture 模式。
+.self - 只当事件是从侦听器绑定的元素本身触发时才触发回调。
+.{keyCode | keyAlias} - 只当事件是从特定键触发时才触发回调。
+.native - 监听组件根元素的原生事件。
+.once - 只触发一次回调。
+.left - (2.2.0) 只当点击鼠标左键时触发。
+.right - (2.2.0) 只当点击鼠标右键时触发。
+.middle - (2.2.0) 只当点击鼠标中键时触发。
+.passive - (2.3.0) 以 { passive: true } 模式添加侦听器
+
+
+
+# vue的修饰符
+
+````js
+v-model.nuber 转换为数字型
+v-model.trim 去除前后的空格
+v-model.lazy  将input时间切换为change事件  input事件是立即触发 change事件是失去焦点触发
+````
+
+# 自定义指令
+
+````js
+Vue.directive('focus',{
+    inserted(el){
+        el.focus()
+        //el表示指令所绑定的元素
+    }
+})
+//修改背景颜色的自定义指令
+   Vue.directive('color', {
+            bind: function(el, binding) {
+                el.style.backgroundColor = binding.value.color
+            }
+        })
+
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg: {
+                    color: 'orange'
+                }
+            },
+            methods: {
+
+            },
+        })
+````
+
+# 局部指令
+
+````js
+
+  let app = new Vue({
+            el: '#app',
+            data: {
+                msg: {
+                    color: 'orange'
+                }
+            },
+            methods: {
+
+            },
+      directives:{
+    focus{
+        //指令的定义
+        inserted(el){
+            el.focus()
+        }
+    }
+}
+        })
+````
+
+# 侦听器
+
+````js
+watch:{
+    firstName(val){
+        this.fullName =val + ' ' +this.lastName
+    }
+    lastName(val){
+        this.fullName=val + ' ' this.firstName
+    }
+}
+````
+
+# 原生js的方法
+
+````js
+charAt(0)取到字符串的第一个字符，
+toupperCase() 小写转为大写
+toLowerCase() 转换为小写
+slice(start,end) //start end
+
+````
+
+vm.$set(vm.属性名)
+
+# 时间处理
+
+````js
+ Vue.filter('format', function(value, arg) {
+      function dateFormat(date, format) {
+        if (typeof date === "string") {
+          var mts = date.match(/(\/Date\((\d+)\)\/)/);
+          if (mts && mts.length >= 3) {
+            date = parseInt(mts[2]);
+          }
+        }
+        date = new Date(date);
+        if (!date || date.toUTCString() == "Invalid Date") {
+          return "";
+        }
+        var map = {
+          "M": date.getMonth() + 1, //月份 
+          "d": date.getDate(), //日 
+          "h": date.getHours(), //小时 
+          "m": date.getMinutes(), //分 
+          "s": date.getSeconds(), //秒 
+          "q": Math.floor((date.getMonth() + 3) / 3), //季度 
+          "S": date.getMilliseconds() //毫秒 
+        };
+        format = format.replace(/([yMdhmsqS])+/g, function(all, t) {
+          var v = map[t];
+          if (v !== undefined) {
+            if (all.length > 1) {
+              v = '0' + v;
+              v = v.substr(v.length - 2);
+            }
+            return v;
+          } else if (t === 'y') {
+            return (date.getFullYear() + '').substr(4 - all.length);
+          }
+          return all;
+        });
+        return format;
+      }
+      return dateFormat(value, arg);
+    })
+
+//filters方式
+        filters: {
+                format(date, format) {
+                    if (typeof date === "string") {
+                        var mts = date.match(/(\/Date\((\d+)\)\/)/);
+                        if (mts && mts.length >= 3) {
+                            date = parseInt(mts[2]);
+                        }
+                    }
+                    date = new Date(date);
+                    if (!date || date.toUTCString() == "Invalid Date") {
+                        return "";
+                    }
+                    var map = {
+                        "M": date.getMonth() + 1, //月份 
+                        "d": date.getDate(), //日 
+                        "h": date.getHours(), //小时 
+                        "m": date.getMinutes(), //分 
+                        "s": date.getSeconds(), //秒 
+                        "q": Math.floor((date.getMonth() + 3) / 3), //季度 
+                        "S": date.getMilliseconds() //毫秒 
+                    };
+                    format = format.replace(/([yMdhmsqS])+/g, function(all, t) {
+                        var v = map[t];
+                        if (v !== undefined) {
+                            if (all.length > 1) {
+                                v = '0' + v;
+                                v = v.substr(v.length - 2);
+                            }
+                            return v;
+                        } else if (t === 'y') {
+                            return (date.getFullYear() + '').substr(4 - all.length);
+                        }
+                        return all;
+                    })
+                    return format;
+                },
+````
+
+# 钩子函数
+
+````js
+mounted:function(){
+    //该生命周期钩子函数被触发的时候，模板已经可以使用
+    //一般此时用于获取后台数据,然后把数据填充到模板
+}
+````
+

@@ -10,6 +10,10 @@
 
 <body>
     <div id="app">
+        <h2 v-clocak>{{msg}}</h2>
+        <h2 v-html='msg1'></h2>
+        <h2 v-text='"msg"'></h2>
+
 
     </div>
 
@@ -17,7 +21,10 @@
     <script>
         let app = new Vue({
             el: '#app',
-            data: {},
+            data: {
+                msg: 'Hellow Vue',
+                msg1: '<h1>Hellow Vue</h1>'
+            },
             methods: {},
         })
     </script>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        .grid {
+            margin: auto;
+            width: 500px;
+            text-align: center;
+        }
+        
+        .grid table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .grid th,
+        td {
+            padding: 10;
+            border: 1px dashed orange;
+            height: 35px;
+            line-height: 35px;
+        }
+        
+        .grid th {
+            background-color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <div class="grid">
+            <div>
+                <h2>图书案例:</h2>
+                <span><label for="id">编号:</label><input type="text" name="id" id="id" v-model="id" :disabled="flag" v-focus ></span>
+                <span><label for="name">图书名称:</label><input type="text" name="name" id="name" v-model="name" :disabled="Falg"></span>
+                <input type="submit" value="提交" @click="handle()" :disabled="submitFlag">
+                <button @click="empty">取消</button>
+
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr :key='item.id' v-for='(item,index) in books'>
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.date}}</td>
+                        <td>
+                            <a href="" @click.prevent="changeBook(item.id)">修改</a>
+                            <span>|</span>
+                            <a href="" @click.prevent="removeBooks(index)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript" src="lib/vue.js"></script>
+    <script type="text/javascript">
+        Vue.directive('focus', {
+            inserted(el) {
+                el.focus()
+                    //el表示指令所绑定的元素
+            }
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                flag: false,
+                submitFlag: false,
+                Falg: false,
+                books: [{
+                    id: 1,
+                    name: '三国演义',
+                    date: ''
+                }, {
+                    id: 2,
+                    name: '水浒传',
+                    date: ''
+                }, {
+                    id: 3,
+                    name: '红楼梦',
+                    date: ''
+                }, {
+                    id: 4,
+                    name: '西游记',
+                    date: ''
+                }]
+            },
+            methods: {
+                //添加图书的函数
+                handle() {
+                    if (this.flag) {
+                        this.books.some((item) => {
+                            if (item.id == this.id) {
+                                item.name = this.name
+                                return true
+                            }
+                        })
+                        this.flag = false
+                    } else {
+                        let book = {}
+                        book.id = this.id
+                        book.name = this.name
+                        book.date = ''
+                        this.books.push(book)
+                    }
+                    this.id = ''
+                    this.name = ''
+                },
+                //修改图书的函数
+                changeBook(id) {
+                    this.flag = true
+                    this.Falg = false
+                    let book = this.books.filter(item => {
+                        return item.id == id
+                    })
+                    this.id = book[0].id
+                    this.name = book[0].name
+                },
+                removeBooks(index) {
+                    this.books.splice(index, 1)
+                },
+                twoClick() {
+                    this.changeBook(id)
+                    this.changeBook(id)
+                },
+                //清空表单
+                empty() {
+                    this.id = ''
+                    this.name = ''
+                    this.flag = false
+                }
+            },
+            watch: {
+                name(val) {
+                    let flag = this.books.some(item => {
+                        return item.name == val
+                    })
+                    if (flag) {
+                        this.submitFlag = true
+                    } else {
+                        this.submitFlag = false
+                    }
+                },
+                id(val) {
+                    let flag = this.books.some(item => {
+                        return item.id == val
+                    })
+                    if (flag) {
+                        this.submitFlag = true
+                        this.Falg = true
+                    } else {
+                        this.submitFlag = false
+                        this.Falg = false
+
+                    }
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>
