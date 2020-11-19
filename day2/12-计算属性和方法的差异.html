@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2>{{msg}}</h2>
+        <h2>{{disPose}}</h2>
+        <h2>{{disPose}}</h2>
+        <h2>{{disPose}}</h2>
+        <h2>{{disPose}}</h2>
+        <h2>{{disPose}}</h2>
+        <h2>{{disPose}}</h2>
+        <h2>{{disPose1()}}</h2>
+        <h2>{{disPose1()}}</h2>
+        <h2>{{disPose1()}}</h2>
+
+
+
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg: 'Hellow'
+            },
+            methods: {
+                disPose1() {
+                    console.log('计算属性');
+
+                    return this.msg.split('').reverse().join('')
+                }
+            },
+            computed: {
+                disPose() {
+                    console.log('计算属性');
+
+                    return this.msg.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

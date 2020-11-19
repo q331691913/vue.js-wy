@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <menu-item :menu-title='ptitle' :parr='parr' :pobj='pobj'></menu-item>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.component('menu-item', {
+            props: ['menuTitle', 'parr', 'pobj'],
+            // data: function() {},
+            template: `
+        <div>
+            {{menuTitle}}
+              <ul> 
+               <li :key='index' v-for='(item,index) in parr'>
+                {{item}}
+               </li>
+              </ul>
+             <span> {{pobj.name}}</span>
+             <span> {{pobj.age}}</span>
+        </div>
+           `
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父组件中的内容',
+                ptitle: '动态绑定属性',
+                parr: ['苹果', '灵梦', '草莓', '栗子'],
+                pobj: {
+                    name: 'ls',
+                    age: 18
+                }
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

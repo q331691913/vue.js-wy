@@ -22,25 +22,40 @@
             border: 1px dashed orange;
             height: 35px;
             line-height: 35px;
+            background-color: #F3DCAB;
         }
         
         .grid th {
             background-color: orange;
+        }
+        
+        .total {
+            height: 30px;
+            line-height: 30px;
+            background-color: #F3DCAB;
+            border-top: 1px solid;
         }
     </style>
 </head>
 
 <body>
     <div id="app">
-
         <div class="grid">
             <div>
-                <h2>图书案例:</h2>
-                <span><label for="id">编号:</label><input type="text" name="id" id="id" v-model="id" :disabled="flag" v-focus ></span>
-                <span><label for="name">图书名称:</label><input type="text" name="name" id="name" v-model="name" ></span>
-                <input type="submit" value="提交" @click="handle()" :disabled="submitFlag">
-                <button @click="empty">取消</button>
-
+                <h1>图书管理</h1>
+                <div class="book">
+                    <div>
+                        <label for="id">编号:</label>
+                        <input type="text" id="id" v-model='id' :disabled='flag' v-focus>
+                        <label for="name">名称：</label>
+                        <input type="text" id="name" v-model='name'>
+                        <button @click='handle()' :disabled="submitFlag">提交</button>
+                    </div>
+                </div>
+            </div>
+            <div class="total">
+                <span>图书总数:</span>
+                <span>{{total}}</span>
             </div>
             <table>
                 <thead>
@@ -49,17 +64,18 @@
                         <th>名称</th>
                         <th>时间</th>
                         <th>操作</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr :key='item.id' v-for='(item,index) in books'>
                         <td>{{item.id}}</td>
                         <td>{{item.name}}</td>
-                        <td>{{item.date}}</td>
+                        <td>{{item.date| format('yyyy-MM-dd hh:mm:ss')}}</td>
                         <td>
-                            <a href="" @click.prevent="changeBook(item.id)">修改</a>
+                            <a href="" @click.prevent='toEdit(item.id,item.name)'>修改</a>
                             <span>|</span>
-                            <a href="" @click.prevent="removeBooks(item.id)">删除</a>
+                            <a href="" @click.prevent='removeBooks(index)'>删除</a>
                         </td>
                     </tr>
                 </tbody>
@@ -68,84 +84,70 @@
     </div>
     <script type="text/javascript" src="lib/vue.js"></script>
     <script type="text/javascript">
-        Vue.directive('focus', {
-            inserted(el) {
-                el.focus()
-                    //el表示指令所绑定的元素
-            }
-        })
-        let app = new Vue({
+        var vm = new Vue({
             el: '#app',
             data: {
                 id: '',
                 name: '',
                 flag: false,
                 submitFlag: false,
-                Falg: false,
                 books: [{
                     id: 1,
                     name: '三国演义',
-                    date: ''
+                    date: 2525609975000
+
                 }, {
                     id: 2,
                     name: '水浒传',
-                    date: ''
+                    date: 2525609975000
                 }, {
                     id: 3,
                     name: '红楼梦',
-                    date: ''
+                    date: 2525609975000
+
                 }, {
                     id: 4,
                     name: '西游记',
-                    date: ''
-                }]
+                    date: 2525609975000
+
+                }],
+
             },
             methods: {
-                //添加图书的函数
+                //提交
                 handle() {
                     if (this.flag) {
-                        this.books.some((item) => {
+                        //修改
+                        this.books.some(item => {
                             if (item.id == this.id) {
-                                item.name = this.name
+                                item.name = this.name;
+                                // 返回 true 后续的循环就不会再走了
                                 return true
                             }
+
                         })
-                        this.flag = false
+                        this.flag = false;
                     } else {
+                        //添加
                         let book = {}
                         book.id = this.id
                         book.name = this.name
-                        book.date = ''
+                        book.date = '';
                         this.books.push(book)
                     }
                     this.id = ''
                     this.name = ''
                 },
-                //修改图书的函数
-                changeBook(id) {
+                toEdit(id, name) {
                     this.flag = true
-
-                    let book = this.books.filter(item => {
-                        return item.id == id
-                    })
-                    this.id = book[0].id
-                    this.name = book[0].name
+                    this.id = id
+                    this.name = name
                 },
-                // removeBooks(index) {
-                //     this.books.splice(index, 1)
-                // },
-                removeBooks(id) {
-                    this.books = this.books.filter(item => item.id != id)
+                removeBooks(index) {
+                    this.books.splice(index, 1)
                 },
-
-                //清空表单
-                empty() {
-                    this.id = ''
-                    this.name = ''
-                    this.flag = false
-                }
             },
-            filter: {
+            filters: {
                 format(date, format) {
                     if (typeof date === "string") {
                         var mts = date.match(/(\/Date\((\d+)\)\/)/);
@@ -181,32 +183,23 @@
                     })
                     return format;
                 }
+
             },
-            watch: {
-                name(val) {
-                    let flag = this.books.some(item => {
-                        return item.name == val
-                    })
-                    if (flag) {
-                        this.submitFlag = true
-                    } else {
-                        this.submitFlag = false
-                    }
-                },
-                id(val) {
-                    let flag = this.books.some(item => {
-                        return item.id == val
-                    })
-                    if (flag) {
-                        this.submitFlag = true
-
-                    } else {
-                        this.submitFlag = false
-
-                    }
+            computed: {
+                total() {
+                    return this.books.length
                 }
             },
-        });
+
+            directives: {
+                focus: {
+                    inserted(el) {
+                        el.focus()
+                    }
+                }
+            }
+
+        })
     </script>
 </body>
 

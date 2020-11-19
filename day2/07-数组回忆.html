@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //  join 把数组转换为字符串，返回的是转化的字符串, 可以自己定义以什么分隔，不加就默认组成一个字符串
+        // let a = ['one', 'two', 'three', 'four']
+        // let b = a.join(',')
+        // console.log(b);
+        //返回 one,two,three,four
+
+        // slice 返回数组中指定的元素，
+        // 第一个参数是代表元素的下标 从下标为几的元素 开始 不写第二个参数默认从当前元素到末尾,
+        // 第二个参数代表从第一个参数选中的下标元素 到 第二个参数下标的元素， (注意此时不包含第二个参数下标的元素)
+        // let a = ['one', 'two', 'three', 'four']
+        // let b = a.slice(1, 3)
+        // console.log(b);
+        //返回新的数组，不影响原数组 ['two', 'three', 'four']
+
+
+        //splice插入  三个参数 改变原数组
+        // let a = ['one', 'two', 'three', 'four']
+        // a.splice(2, 0, 'wy')
+        // console.log(a);
+        // //改变原数组
+        // //splice删除 一个参数代表从此元素删到尾元素，两个参数 第一个代表开始，第二个删几个 
+        // let a = ['one', 'two', 'three', 'four']
+        // let b = a.splice(1)
+        // console.log(a, b);
+        //改变原数组，返回被删除的数组 a=['one']  b=['two', 'three', 'four']
+
+        //splice更新数组 同插入 就是删了之后在插入
+        // let a = ['one', 'two', 'three', 'four']
+        // let b = a.splice(1, 1)
+        // console.log(a, b);
+        //改变原数组，返回删除的数组
+
+        //push 末尾添加元素
+
+        // let a = ['one', 'two', 'three', 'four']
+        // a.push('five', 'six')
+        // console.log(a);
+        //改变原数组，返回修改后的数组长度
+
+        //pop 删除末尾元素
+        // let a = ['one', 'two', 'three', 'four']
+        // let b = a.pop()
+        // console.log(a, b);
+        //删除数组的最后一个元素，减小数组长度，并返回删除的元素，改变原数组 a=['one', 'two', 'three'] b='four'
+
+        //shift 删除首元素
+        // let a = ['one', 'two', 'three', 'four']
+        // let b = a.shift()
+        // console.log(a, b);
+        // //删除首元素，返回被删除的元素，改变原数组 a=["two", "three", "four"] b='one'
+        // //unshift 最前面添加元素
+        // let a = ['one', 'two', 'three', 'four']
+        // a.unshift('zero')
+        // console.log(a);
+        //改变原数组，返回修改后的数组长度
+        // a = ['1', '2', '3', '4', '5']
+        // let b = 0
+        // a.forEach(item => b += parseInt(item))
+        // console.log(b);
+        var a = [5, 4, 3, 2, 1]
+        var array = a.filter(function(x, i) {
+            //x为每个元素
+            //i为该元素的下标
+            return i % 2 == 0
+        })
+        console.log(array, a);
+    </script>
+</body>
+
+</html>

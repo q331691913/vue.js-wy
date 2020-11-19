@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <sum></sum>
+        <sum></sum>
+
+        <sum></sum>
+
+        <sum></sum>
+
+        <sum></sum>
+
+
+    </div>
+    <template id="cnp">
+    <div>
+        <h2>当前计数:{{counter}}</h2>
+        <button @click='sub'>-</button>
+    
+        <button @click='add'>+</button>
+    </div>
+</template>
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.component('sum', {
+            data: function() {
+                return {
+                    counter: 0
+                }
+
+            },
+            template: '#cnp',
+            methods: {
+                add() {
+                    this.counter++
+                },
+                sub() {
+                    this.counter--
+                }
+            }
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

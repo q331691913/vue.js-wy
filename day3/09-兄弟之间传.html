@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <tom></tom>
+        <jery></jery>
+    </div>
+    <template id="tom">
+    <div>
+        <div >Tom:{{num}}</div>
+        <button @click="btnClick">点击</button>
+    </div>
+</template>
+    <template id="jery">
+    <div>
+        <div >jery:{{num}}</div>
+        <button @click="btnClick">点击</button>
+    </div>
+</template>
+    <script src="./lib/vue.js"></script>
+    <script>
+        let hub = new Vue()
+        Vue.component('tom', {
+            data: function() {
+                return {
+                    num: 0
+                }
+
+            },
+            methods: {
+                btnClick() {
+                    hub.$emit('jery', 2)
+                }
+            },
+            template: '#tom',
+            mounted() {
+                hub.$on('tom', (val) => {
+                    this.num += val
+                })
+            },
+
+        })
+        Vue.component('jery', {
+            data: function() {
+                return {
+                    num: 0
+                }
+
+            },
+            methods: {
+                btnClick() {
+                    hub.$emit('tom', 1)
+                }
+            },
+            template: '#jery',
+            mounted() {
+                hub.$on('jery', (val) => {
+                    this.num += val
+                })
+            },
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

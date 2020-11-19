@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2></h2>
+        <button v-on:keyup.enter='submitF' v-focus>提交</button>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.directive('focus', {
+            inserted(el) {
+                el.focus()
+                    //el表示指令所绑定的元素
+            }
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+                submitF() {
+                    console.log('enter了');
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

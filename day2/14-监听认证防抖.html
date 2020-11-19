@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <span>用户名：</span>
+        <span><input type="text" name="" id="" v-model='uname'></span>
+        <span>{{tip}}</span>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        let timer = null
+        let app = new Vue({
+            el: '#app',
+            data: {
+                uname: '',
+                tip: ''
+            },
+            methods: {
+                changeName() {
+                    clearInterval(timer)
+                    timer = setTimeout(() => {
+                        if (this.uname == 'admin') {
+                            this.tip = '用户名已经存在，请重新输入'
+                        } else {
+                            this.tip = '用户名可用'
+                        }
+                    }, 2000);
+                }
+            },
+            watch: {
+                uname(val) {
+                    this.changeName(val)
+                    this.tip = '正在验证...'
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

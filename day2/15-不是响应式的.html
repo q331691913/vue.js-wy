@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li>{{msg[0]}}</li>
+            <li>{{msg[1]}}</li>
+
+            <li>{{msg[2]}}</li>
+
+        </ul>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg: ['1', '2', '3']
+            },
+            methods: {},
+        })
+        app.msg[0] = 'one'
+        app.$set(app.msg, 0, 'one')
+    </script>
+</body>
+
+</html>

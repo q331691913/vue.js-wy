@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <a :href="isFlag?url:url1">{{isFlag?msg1:msg2}}</a>
+
+        <button @click='handle'>切换</button>
+    </div>
+    <script type="text/javascript" src="./lib/vue.js"></script>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                url: 'http://www.baidu.com',
+                url1: 'http://itcast.cn',
+                msg1: '百度',
+                msg2: '传智播客',
+                isFlag: true,
+            },
+            methods: {
+                handle: function() {
+                    this.isFlag = !this.isFlag
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

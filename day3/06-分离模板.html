@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <cpn1></cpn1>
+    </div>
+    <template id="cpn">
+        <div>
+            <h2>我的标题</h2>
+            <p>冲锋陷阵</p>
+        </div>
+    </template>
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.component('cpn1', {
+
+            template: '#cpn'
+
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

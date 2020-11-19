@@ -54,22 +54,19 @@
     <div id="app">
         <div class="tab">
             <ul>
-                <li v-for='(item,index) in list' :class='currentIndex==index?"active":""' @click="change(index)">{{item.title}}</li>
+                <li v-for='(item,index) in list' :key="item.id" :class="{active:curentIndex==index }" @click="changeStyle(index)">{{item.title}} </li>
             </ul>
-            <div v-for="(item,index) in list " :key='item.id' :class='currentIndex==index?"current":""'>
+            <div v-for="(item,index) in list" :key="item.id" :class="{current:curentIndex==index}">
                 <img :src="item.path " alt=" ">
             </div>
         </div>
     </div>
     <script type="text/javascript " src="lib/vue.js "></script>
     <script type="text/javascript ">
-        /*
-                                                                                                                                                                                                                      
-                                                                                                                                                                                                                    */
         var vm = new Vue({
             el: '#app',
             data: {
-                currentIndex: 0, // 选项卡当前的索引
+                curentIndex: 0,
                 list: [{
                     id: 1,
                     title: 'apple',
@@ -85,10 +82,10 @@
                 }]
             },
             methods: {
-                change(index) {
-                    this.currentIndex = index
-                }
 
+                changeStyle(index) {
+                    this.curentIndex = index
+                }
             }
         });
     </script>

@@ -16,6 +16,32 @@ h2{{counter*2}}h2
 
 
 
+# vue的生命周期
+
+**生命周期:事物从诞生到消亡的整个过程**
+
+**vue生命周期:挂载、更新、销毁:想尽可能早的使用data和methods可以把代码写到created里面，想操作dom并且操作渲染之后的数据**
+**挂载阶段**
+**beforeCreate**
+**实例初始化之后，创建之前这个阶段的data和methods是读取不到的**
+**created** 
+**实力创建之后，可以访问data和methods 渲染之前 this.$el属性不可见**
+**beforeMount**
+**在渲染之前 this.$el可见，但是还不能获取渲染后的内容**
+**mounted**
+**数据已经渲染到了页面上了，可以通过this.$el.innerHTML 获取渲染后的内容**
+**beforeUpdate**
+**准备更新的过程**
+**updated**
+**更新好**
+**beforeDestory**
+**准备销毁的过程**
+**destoryed**
+**销毁实例完成**
+
+**每个阶段会触发每个阶段的函数**
+**执行到什么阶段就触发什么阶段的函数**
+
 # v-bind指令
 
 作用:动态绑定属性,可以缩写成:
@@ -146,6 +172,7 @@ firstName+lastName
 @click.prevent="btnsubmit"  //取消默认
 @keyup.enter=''  //监听键盘的enter
 @click.once   // 只让点击一次
+.delete
 
 ````
 
@@ -196,12 +223,13 @@ some() //some 与every相对，是否存在某个值满足条件  相当于||的
 fifter()//筛选数组，返回数组
 ````
 
+# 事件修饰符
 
-
+````js
 .stop - 调用 event.stopPropagation()。
 .prevent - 调用 event.preventDefault()。
 .capture - 添加事件侦听器时使用 capture 模式。
-.self - 只当事件是从侦听器绑定的元素本身触发时才触发回调。
+.self - 只当事件是从侦听器绑定的元素本身触发时才触发回调。 
 .{keyCode | keyAlias} - 只当事件是从特定键触发时才触发回调。
 .native - 监听组件根元素的原生事件。
 .once - 只触发一次回调。
@@ -209,6 +237,16 @@ fifter()//筛选数组，返回数组
 .right - (2.2.0) 只当点击鼠标右键时触发。
 .middle - (2.2.0) 只当点击鼠标中键时触发。
 .passive - (2.3.0) 以 { passive: true } 模式添加侦听器
+
+````
+
+# 自定义按键修饰符
+
+````js
+Vue.config.keyCodes.a=65
+event.keyCode
+
+````
 
 
 
@@ -389,3 +427,150 @@ mounted:function(){
 }
 ````
 
+# 组件注册
+
+````html
+    Vue.component('button-counter', {
+            data: function() {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button @click="handle">点击了{{count}}次</button>',
+            methods: {
+                handle() {
+                    this.count++
+                }
+            }
+        })
+
+//第二种方法
+    <div id="app">
+        <my-cpn></my-cpn>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        //创建组件
+        const cpn1 = Vue.extend({
+      template: `
+          <div>
+          <h2>我是标题1</h2>
+          <p>我是内容</p>
+          </div>
+    `
+        })
+        //注册组件
+        Vue.component('my-cpn', cpn1)
+
+        let app = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+````
+
+# 父组件向子组件传值
+
+````html
+   <div id="app">
+        <menu-item :menu-title='ptitle' :parr='parr' :pobj='pobj'></menu-item>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.component('menu-item', {
+            props: ['menuTitle', 'parr', 'pobj'],
+            // data: function() {},
+            template: `
+        <div>
+            {{menuTitle}}
+              <ul> 
+               <li :key='index' v-for='(item,index) in parr'>
+                {{item}}
+               </li>
+              </ul>
+             <span> {{pobj.name}}</span>
+             <span> {{pobj.age}}</span>
+        </div>
+           `
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父组件中的内容',
+                ptitle: '动态绑定属性',
+                parr: ['苹果', '灵梦', '草莓', '栗子'],
+                pobj: {
+                    name: 'ls',
+                    age: 18
+                }
+            },
+            methods: {},
+        })
+    </script>
+````
+
+# 子组件向父组件传值
+
+````html
+// $.emit()发射一个事件给父子件
+    <div id="app">
+        <cpn @itemclick='cpnClick'></cpn>
+    </div>
+    <template id="cpn">
+    <div>
+        <button v-for='item in cate' @click='btnClick(item)'>{{item.name}}</button>
+    </div>
+</template>
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.component('cpn', {
+            data: function() {
+                return {
+                    cate: [{
+                            id: 'aaa',
+                            name: '热门推荐'
+                        }, {
+                            id: 'bbb',
+                            name: '手机数码'
+                        },
+
+                        {
+                            id: 'ccc',
+                            name: '家用家电'
+                        }, {
+                            id: 'ddd',
+                            name: '电脑办公'
+                        },
+
+                    ]
+                }
+            },
+            template: '#cpn',
+            methods: {
+                btnClick(item) {
+                    this.$emit('itemclick', item)
+                }
+            }
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                cpnClick(item) {
+                    console.log(' cpnClick', item);
+                }
+            },
+        })
+    </script>
+````
+
+# 组件插槽
+
+slot标签
+
+# 具名插槽
+
+slot 里面加name属性

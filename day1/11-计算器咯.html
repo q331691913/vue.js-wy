@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div><label for="">数组A</label> <input type="text" name="" id="" v-model='a'></div>
+        <div><label for="">数组B</label> <input type="text" name="" id="" v-model='b'></div>
+        <button @click='sum'>计算</button>
+        <span v-model='result'>{{result}}</span>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.directives
+        let app = new Vue({
+            el: '#app',
+            data: {
+                a: '',
+                b: '',
+                result: ''
+            },
+            methods: {
+                sum() {
+                    this.result = parseInt(this.a) + parseInt(this.b)
+                    this.a = ''
+                    this.b = ''
+                },
+                clear(){
+
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
