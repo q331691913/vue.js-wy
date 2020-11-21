@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <nei-rong>
+            <template v-slot:header>
+                
+                    1
+                
+            </template> 1
+        </nei-rong>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.component('nei-rong', {
+
+            template: `
+            <div>
+                <header>
+                    <slot name='header'><p>标题信息</p></slot>
+                </header>
+                <main>
+                    <slot>
+            <p>主要内容1</p>
+            <p>主要内容2</p>
+                    </slot>
+                </main>
+                <footer>
+                    <slot name='footer'>
+                        <p>底部信息</p>
+                        </slot>
+                </footer>
+                </div>`,
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

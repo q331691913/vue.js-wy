@@ -49,7 +49,7 @@
                         <input type="text" id="id" v-model='id' :disabled='flag' v-focus>
                         <label for="name">名称：</label>
                         <input type="text" id="name" v-model='name'>
-                        <button @click='handle()' :disabled="submitFlag">提交</button>
+                        <button @click='handle(id,name)' :disabled="submitFlag">提交</button>
                     </div>
                 </div>
             </div>
@@ -71,11 +71,11 @@
                     <tr :key='item.id' v-for='(item,index) in books'>
                         <td>{{item.id}}</td>
                         <td>{{item.name}}</td>
-                        <td>{{item.date| format('yyyy-MM-dd hh:mm:ss')}}</td>
+                        <td>{{item.date|format('yyyy-MM-dd hh:mm:ss')}}</td>
                         <td>
                             <a href="" @click.prevent='toEdit(item.id,item.name)'>修改</a>
                             <span>|</span>
-                            <a href="" @click.prevent='removeBooks(index)'>删除</a>
+                            <a href="" @click.prevent='removeBooks(item.id)'>删除</a>
                         </td>
                     </tr>
                 </tbody>
@@ -114,38 +114,44 @@
 
             },
             methods: {
-                //提交
-                handle() {
+                //添加图书handel
+                handle(id, name) {
+                    //编辑
                     if (this.flag) {
-                        //修改
                         this.books.some(item => {
-                            if (item.id == this.id) {
-                                item.name = this.name;
-                                // 返回 true 后续的循环就不会再走了
+                            if (item.id == id) {
+                                item.name = name
                                 return true
                             }
-
                         })
-                        this.flag = false;
+                        this.flag = false
                     } else {
+                        // 如果说 id 在 data 里面能找到，就不允许添加了
+                        let result = this.books.findIndex(item => item.id == this.id);
+                        if (result !== -1) {
+                            return alert('ID不能重复');
+                        } else if (id == '' || name == '') {
+                            return alert('值不能为空')
+                        }
                         //添加
                         let book = {}
                         book.id = this.id
                         book.name = this.name
-                        book.date = '';
+                        book.date = new Date().getTime()
                         this.books.push(book)
                     }
-                    this.id = ''
-                    this.name = ''
                 },
+                //删除
+                removeBooks(id) {
+                    this.books = this.books.filter(item => item.id != id)
+                },
+
+                //修改图书toEdit
                 toEdit(id, name) {
-                    this.flag = true
                     this.id = id
                     this.name = name
-                },
-                removeBooks(index) {
-                    this.books.splice(index, 1)
-                },
+                    this.flag = true
+                }
             },
             filters: {
                 format(date, format) {
@@ -183,21 +189,25 @@
                     })
                     return format;
                 }
-
             },
             computed: {
                 total() {
-                    return this.books.length
+                    return this.books.lengths
                 }
             },
-
             directives: {
                 focus: {
                     inserted(el) {
                         el.focus()
                     }
                 }
-            }
+            },
+            watch: {
+                name(val) {
+                    let flag = this.books.some(item => item.name == val)
+                    this.submitFlag = flag
+                }
+            },
 
         })
     </script>

@@ -567,10 +567,61 @@ mounted:function(){
     </script>
 ````
 
+# 兄弟之间传递
+
+````js
+实例化一个vue对象
+let hub = new Vue()
+
+hub.$on()   //监听
+hub.$off()  //销毁
+````
+
+
+
+
+
 # 组件插槽
 
-slot标签
+slot标签   组件中间没有内容默认显示的就是插槽内容
 
 # 具名插槽
 
-slot 里面加name属性
+slot 里面加name属性   2.6.1以后阔以简写 <template #name>
+
+# 作用域插槽
+
+< template slot-scope='自定义属性名'
+
+# 模块化导入导出
+
+````html
+export{} //导出   export let name= 'wany'
+import{} //导入
+
+export default //能够自己命名 只能有一个default
+
+comentJs
+````
+
+
+
+# Promise对象
+
+实例化Promise对象构造函数中传递函数，该函数中用于处理异步任务
+
+resolve 和reject两个参数用于处理成功和失败两种情况，并通过p.then获取处理结果
+
+````js
+let p = new Promise(function(resolve,reject){
+    //成功时调用resolve
+    //失败时调用reject
+})
+p.then(function(ret)){
+    //从resolve中得到正常结果
+},function(info){
+    //从reject得到错误信息
+}
+````
+
+​	

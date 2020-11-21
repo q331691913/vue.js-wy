@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div :style="{fontSize:fontSize+'px'}"> {{ptitle}}</div>
+        <m-item :title='ptitle' @m-add='changeAdd($event)'></m-item>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.component('m-item', {
+            props: ['title'],
+            data: function() {
+                return {
+                    msg: '子组件给老父亲的关爱'
+                }
+            },
+            template: `
+            <div>
+                <button @click="$emit('m-add',msg)">点击</button>
+            </div>
+          
+            `,
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {
+                ptitle: '父组件给的内容',
+                fontSize: 10
+            },
+            methods: {
+                changeAdd(e) {
+                    this.fontSize += 5
+                    console.log(e);
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <cpn1></cpn1>
+
+        <cpn2></cpn2>
+        <hr>
+    </div>
+    <div id='app1'>
+        <cpn1></cpn1>
+        <cpn2></cpn2>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.component('cpn2', {
+            data: function() {
+                return {
+                    msg1: '我是全局的'
+                }
+            },
+            template: `
+            <div>
+                {{msg1}}
+            </div>
+            `,
+        })
+        let cpn1 = {
+            data() {
+                return {
+                    msg2: '我是局部的'
+                }
+            },
+            template: `
+            <div>
+                {{msg2}}
+            </div>
+            `
+        }
+        let app = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            components: {
+                'cpn1': cpn1,
+
+            }
+        })
+        let app1 = new Vue({
+            el: '#app1',
+            data: {},
+            methods: {
+
+            },
+            components: {
+                'cpn1': cpn1,
+
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -16,26 +16,40 @@
 
     <script src="./lib/vue.js"></script>
     <script>
+        let cpn1 = component
+
+
+
+
         Vue.component('cpn', {
             // data: function() {},
+            props: ['msg'],
             template: `
 <div>
- <h2>我是标题1</h2>
+ <h2>{{msg}}</h2>
  <p>我是内容</p>
  </div>
     `
         })
         let app = new Vue({
             el: '#app',
-            data: {},
+            data: {
+                msg1: '我是父亲给去全局的标题'
+            },
             methods: {},
             components: {
+
                 'cpn2': {
+                    data() {
+                        return {
+                            msg: '我是标题'
+                        }
+                    },
                     template: `
                  <div>
-                         <h2>我是标题1</h2>
-                       <p>我是内容</p>
-                      </div>
+                    <h2>{{msg}}</h2>
+                    <p>我是内容</p>
+                 </div>
                            `
                 }
             }
