@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div :style="{fontSize:fontSize+'px'}">{{ptitle}}</div>
+        <my-item @m-add='changeAdd'></my-item>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.component('my-item', {
+            template: `
+            <div><button @click='$emit("m-add")'>加大</button></div>
+            `,
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {
+                ptitle: '父组件中的内容',
+                fontSize: 10
+            },
+            methods: {
+                changeAdd() {
+                    this.fontSize += 5
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

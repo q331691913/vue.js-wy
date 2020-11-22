@@ -42,7 +42,7 @@ h2{{counter*2}}h2
 **每个阶段会触发每个阶段的函数**
 **执行到什么阶段就触发什么阶段的函数**
 
-# v-bind指令
+# v-bind指令	
 
 作用:动态绑定属性,可以缩写成:
 
@@ -616,12 +616,155 @@ resolve 和reject两个参数用于处理成功和失败两种情况，并通过
 let p = new Promise(function(resolve,reject){
     //成功时调用resolve
     //失败时调用reject
+}).then(ret=>{
+  log(ret)  
+},
+       info=>{
+    log(info)
 })
-p.then(function(ret)){
+p.then(function(ret){
     //从resolve中得到正常结果
 },function(info){
     //从reject得到错误信息
-}
+})
 ````
 
-​	
+# pormise简化的写法
+
+````js
+let fs = require('fs')
+
+function read(filename) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filename, 'utf8', (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    })
+  })
+}
+
+read('./name.txt').then((data)=>{
+  return read(data) 
+}).then((data)=>{
+  return read(data)  
+}).then((data)=>{
+    console.log(data);
+},err=>{
+    console.log(err);
+})
+
+````
+
+
+
+# 	then传递参数的时候
+
+```
+第一个then返回一个promise实例对象,第二个then得到第一个异步任务返回的值，如果then返回的是一个普通的值，返回的普通值会直接传递到下一个then，通过then参数中函数的参数接受该值，而且此时then会产生一个promise实例对象
+```
+
+# promise对象方法
+
+````js
+catch //  接收reject的信息  有一个错误就执行catch
+finally // 成功与否都会执行的 
+
+
+promise.all() //并发处理多个异步任务，所有任务都执行完成才能得到结果 里面有个数组
+
+
+promise.race() //并发处理多个异步任务，只要有一个任务完成就能得到结果
+````
+
+#  fetch API用法
+
+浏览器提供的请求数据的API 用来替代 XML	
+
+````js
+ fetch('url').then(function(data){
+     data.text();  // 他返回一个promise实例对象，用于获取后台返回的数据
+ })then(function(data){
+     console.log(data)
+ })
+post 请求 通过body 要加个headers{'Content-Type':'bapplication/x-www-from-urlencode'}
+
+// json方式后端代码
+app.get('/json', (req, res) => {
+    res.json({
+        uname: 'lisi',
+        age: 13,
+        gender: 'male'
+    });
+} 
+        // json方式                                      
+ fetch('http://localhost:3000/json).then(function(data){
+    retrun data.json();  // 他返回一个promise实例对象，用于获取后台返回的数据
+ })then(function(data){
+let obj =JSON.parse(data)
+log(data.uname)
+ })
+````
+
+# axios的基本用法
+
+本质上是对ajax的一个封装 支持promise的写法  
+
+````js
+axios.get('/adata').then(ret=>{
+    //data属性是固定的，用于获取后台的实际数据
+    console.log(ret.data)
+})
+get和delete 请求 //通过url传递参数 直接在url地址后加参数 ？id=123  通过prams对象传参axios.get('/adata',{
+prams:{
+    id:123
+}
+})
+
+axios.post('/adata',{
+    uname:'tw'
+}).then(ret=>{
+    //data属性是固定的，用于获取后台的实际数据
+    console.log(ret.data)
+    
+})
+axios的响应结果
+data 实际响应回来的数据
+headers响应头
+status 响应码
+statusText 响应信息
+axios.defaults.baseURL='http://localhost:3000/app'  //默认地址
+
+````
+
+# axios拦截器的用法
+
+````js
+axions.interceptors.request.use(function(config){
+    config.headers.mytoken='nihao'
+    return config
+},function(err){
+    console.log(err)
+})
+axios.get('http://')
+
+响应拦截器
+axios.interceptors.response.use() 也是成功和失败
+````
+
+# Asynv/ Await 异步的终极解决方案
+
+````js
+async function queryData(id){
+    const ret =await axios.get('/data')
+    return ret;
+}
+queryData.then(ret=>{
+    log(ret.data)
+})
+//asynv 写在箭头函数的括号前面 , 普通函数写在function前面
+//async 修饰的函数我们称为一个异步函数，这个异步函数调用后返回值是一个promise实例
+//await 必须放到async函数里面
+//awaot 后面一般要跟一个promise await后的返回值是promise resolve
+ 
+````
+

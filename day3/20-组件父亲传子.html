@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my-love :msg="msg"></my-love>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        Vue.component('my-love', {
+            props: ['msg'],
+            template: `
+            <div>
+            <h2>{{msg}}</h2>
+            </div>
+            `,
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {
+                msg: '来自父组件的爱'
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

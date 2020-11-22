@@ -82,6 +82,9 @@ var vm = new Vue({
 双向数据绑定的原理！
 
 ```html
+//数据的变化会导致视图的变化，视图的变化同样会导致数据的变化
+
+
 <input type="text">
 <p></p>
 <script>

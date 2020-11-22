@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        function queryData(url) {
+            let p = new Promise((resolve, reject) => {
+
+
+                let xhr = new XMLHttpRequest()
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState != 4) return
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        //处理正常的情况
+                        resolve(xhr.responseText)
+
+                    } else {
+                        reject('服务器错误')
+                    }
+                }
+                xhr.open('get', url)
+                xhr.send(null)
+            })
+            return p
+        }
+
+        queryData('http://localhost:3000/data1')
+            .then(data => {
+                console.log(data);
+            }, err => {
+                console.log(err);
+            })
+    </script>
+</body>
+
+</html>
