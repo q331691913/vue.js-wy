@@ -98,16 +98,20 @@ app.get('/a3', (req, res) => {
 })
 
 // 路由
-app.get('/data', (req, res) => {
-    res.send('Hello World!')
-})
 app.get('/data1', (req, res) => {
-    setTimeout(function() {
-        res.send('Hello TOM!')
-    }, 1000);
+
+
+    res.send('data2')
+
+
 })
 app.get('/data2', (req, res) => {
-    res.send('Hello JERRY!')
+    setTimeout(function() {
+        res.send('data3')
+    }, 1000);
+})
+app.get('/data3', (req, res) => {
+    res.send('我是data3返回的数据')
 })
 
 // 启动监听

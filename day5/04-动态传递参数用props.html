@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!--  -->
+        <router-link to='/user/1'>User1</router-link>
+        <router-link to='/user/2'>User2</router-link>
+        <router-link to='/user/3'>User3</router-link>
+
+        <router-link to='/register'>Register</router-link>
+        <!-- 路由填充位 -->
+        <router-view></router-view>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/vue-router_3.0.2.js"></script>
+    <script>
+        const User = {
+            props: ['id'],
+            template: `<div><h1>User 组件--用户id为:{{id}}</h1></div>`
+        }
+        const Register = {
+            template: `
+              <div>
+                <h1>Register 组件</h1>
+                <hr>
+                <router-link to='/register/tab1'>Tab1</router-link>
+                <router-link to='/register/tab2'>Tab2</router-link>
+                <router-view></router-view> 
+              </div>            
+                `
+        }
+        const Tab1 = {
+            template: `<h3>TAB1</h3>`
+        }
+        const Tab2 = {
+                template: `<h3>TAB2</h3>`
+            }
+            //创建路由实例对象
+        const router = new VueRouter(
+            //redirect 重定向到指定路径
+            {
+                routes: [{
+                    path: '/',
+                    redirect: '/user'
+
+                }, {
+                    path: '/user/:id',
+                    component: User,
+                    props: true
+                }, {
+                    path: '/register',
+                    component: Register,
+                    children: [{
+                        path: '/register/tab1',
+                        component: Tab1,
+                    }, {
+                        path: '/register/tab2',
+                        component: Tab2,
+                    }]
+
+
+
+                }]
+            })
+        let app = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            //挂载路由实例对象
+            router
+        })
+    </script>
+</body>
+
+</html>

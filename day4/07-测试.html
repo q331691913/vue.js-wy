@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./jquery.min.js"></script>
+    <script>
+        // function rq(path) {
+        //     return new Promise((resolve, reject) => {
+        //         $.ajax({
+        //             url: `http://localhost:3000/${path}`,
+        //             success: function(data) {
+        //                 // 成功之后，调用 resolve，把后端返回的真正的数据传递出去
+        //                 resolve(data);
+        //             },
+        //             error: function(err) {
+        //                 // 失败之后，就把错误对象传递出去
+        //                 reject(err);
+        //             }
+        //         });
+        //     });
+        // }
+
+        // rq('data3').then(data => {
+        //     console.log(data);
+        // }).catch(err => {
+        //     // 只要前面的操作有一个出错了就会走这里的 catch
+        //     console.log('出错啦', err.statusText);
+        // });
+        // Promise.all([rq('data1'), rq('data2'), rq('data3')]).then(result => {
+        //     console.log(result[result.length - 1]);
+        // console.log(result.pop());
+        // console.log(result.lastIndexOf());
+        // });
+        axios.interceptors.response.use(function(res) {
+            return res.data;
+        }, function(error) {
+            console.log(error)
+        });
+        async function queryData() {
+            // await 之后的返回值，就是这个 Promise 成功之后的结果
+            let ret = await axios.get('adata');
+            // console.log(ret.data)
+            // 函数封装有一个原则：不要替调用者决定做什么事情
+            return ret;
+        }
+        // queryData 是一个异步函数，返回结果是一个 Promise
+        queryData().then(res => {
+            console.log(res);
+        });
+    </script>
+</body>
+
+</html>

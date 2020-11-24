@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        a {
+            text-decoration: none;
+            color: orange;
+            margin-right: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <a href="#/zhuye">主页</a>
+        <a href="#/caijing">财经</a>
+        <a href="#/guanzhu">关注</a>
+        <a href="#/redian">热点</a>
+        <a href="#/douyu">斗鱼</a>
+        <component :is="comName"></component>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        const zhuye = {
+            template: `<h2>科技</h2>`
+        }
+        const caijing = {
+            template: `<h2>财经</h2>`
+        }
+        const guanzhu = {
+            template: `<h2>关注</h2>`
+        }
+        const redian = {
+            template: `<h2>热点</h2>`
+        }
+        const douyu = {
+            template: `<h2>斗鱼</h2>`
+        }
+        let app = new Vue({
+            el: '#app',
+            data: {
+                comName: 'douyu'
+            },
+            methods: {
+
+            },
+            components: {
+                zhuye,
+                caijing,
+                guanzhu,
+                redian,
+                douyu
+            }
+        })
+        window.onhashchange = function() {
+            console.log(location.hash.slice(1));
+            switch (location.hash.slice(1)) {
+                case '/zhuye':
+                    app.comName = 'zhuye'
+
+                    break
+                case '/caijing':
+                    app.comName = 'caijing'
+
+                    break
+                case '/guanzhu':
+                    app.comName = 'guanzhu'
+
+                    break
+                case '/redian':
+                    app.comName = 'redian'
+
+                    break
+                case '/douyu':
+                    app.comName = 'douyu'
+
+                    break
+
+
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user/1">User1</router-link>
+        <router-link to="/user/2">User2</router-link>
+        <router-link to="/user/3">User3</router-link>
+        <router-link to="/user/4">User4</router-link>
+        <router-link to='/register'>Register</router-link>
+        <router-view></router-view>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/vue-router_3.0.2.js"></script>
+
+    <script>
+        const User = {
+            props: ['id'],
+            template: `
+            <div><h1>User组件----用户的动态生成的id：{{id}}</h1></div>
+            `
+        }
+        const Register = {
+            template: `
+            <div>
+            <h1>Register组件</h1>
+            <hr>
+        <router-link to='/tab1'>Tab1</router-link>
+        <router-link to='/tab2'>Tab2</router-link>
+        <router-view></router-view>
+            </div>
+            `
+        }
+        const Tab1 = {
+            template: `<div><h1>Register的儿子1</h1></div>`
+        }
+        const Tab2 = {
+            template: `<div><h1>Register的儿子2</h1></div>`
+        }
+        const router = new VueRouter({
+            routes: [{
+                path: '/',
+                redirect: '/user/1'
+            }, {
+                path: '/user/:id',
+                component: User,
+                props: true
+            }, {
+                path: '/register',
+                component: Register,
+                children: [{
+                    path: '/',
+                    redirect: '/tab1'
+                }, {
+                    path: '/tab1',
+                    component: Tab1,
+                }, {
+                    path: '/tab2',
+                    component: Tab2,
+                }]
+            }, ]
+        })
+        let app = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        })
+    </script>
+</body>
+
+</html>

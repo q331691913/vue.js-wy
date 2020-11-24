@@ -8,6 +8,8 @@ h2{{counter*2}}h2
 
 **v-once指令**：只执行一次，后面改变了值带了v-once的不改变
 
+
+
 **v-html=""**    ：   解析带有html标签的数据
 
 **v-pre指令** :  是什么就显示什么不解析
@@ -593,16 +595,9 @@ slot 里面加name属性   2.6.1以后阔以简写 <template #name>
 
 < template slot-scope='自定义属性名'
 
-# 模块化导入导出
+# 
 
-````html
-export{} //导出   export let name= 'wany'
-import{} //导入
 
-export default //能够自己命名 只能有一个default
-
-comentJs
-````
 
 
 
@@ -671,8 +666,6 @@ finally // 成功与否都会执行的
 
 
 promise.all() //并发处理多个异步任务，所有任务都执行完成才能得到结果 里面有个数组
-
-
 promise.race() //并发处理多个异步任务，只要有一个任务完成就能得到结果
 ````
 
@@ -749,6 +742,14 @@ axios.get('http://')
 
 响应拦截器
 axios.interceptors.response.use() 也是成功和失败
+axios.interceptors.response.use(function (res) {
+    // 2.1  在接收响应做些什么
+    var data = res.data;
+    return data;
+}, function (err) {
+    // 2.2 对响应错误做点什么
+    console.log(err)
+});
 ````
 
 # Asynv/ Await 异步的终极解决方案
@@ -764,7 +765,123 @@ queryData.then(ret=>{
 //asynv 写在箭头函数的括号前面 , 普通函数写在function前面
 //async 修饰的函数我们称为一个异步函数，这个异步函数调用后返回值是一个promise实例
 //await 必须放到async函数里面
-//awaot 后面一般要跟一个promise await后的返回值是promise resolve
+//await 后面一般要跟一个promise await后的返回值是promise resolve
  
 ````
 
+
+
+# 路由阶段
+
+使用componet标签当作组件的占位符 用:is绑定一个组件的名字
+
+```js
+/监听hash的变化
+window.onhashchange=function(){
+    //location.hash 获取最新的hash值
+    log(location.hash)
+    switch(location.hash.slice(1){
+           case '/zhuye',
+           vm.comName='zhuye	'
+           })
+}
+```
+
+# Vue Router
+
+用于spa应用程序的开发
+
+- 支持HTML5历史模式或hash模式
+- 支持嵌套路由
+- 支持路由参数
+- 支持编程式路由
+- 支持命名路由
+
+**vue router用法**
+
+````html
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+      <!--  router-link vue中替代a标签 to 替代href 不过此时可以不要#-->
+        <router-link to='/user'>User</router-link>
+        <router-link to='/register'>Register</router-link>
+        <!-- 路由填充位 -->
+        <router-view></router-view>
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <!--  别忘了引用vue-router   -->
+    <script src="./lib/vue-router_3.0.2.js"></script>
+    <script>
+        const User = {
+            template: `<h1>User 组件</h1>`
+        }
+        const Register = {
+                template: `<h1>Register 组件</h1>`
+            }5
+            //创建路由实例对象
+        const router = new VueRouter(
+            //redirect 重定向到指定路径
+            {
+                routes: [{
+                    path: '/',
+                    redirect: '/user'
+
+                }, {
+                    path: '/user',
+                    component: User
+                }, {
+                    path: '/register',
+                    component: Register
+                }]
+            })
+        let app = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            //挂载路由实例对象
+            router
+        })
+    </script>
+</body>
+
+</html>
+````
+
+# 编程式导航的基本用法
+
+````js
+this.$router.push('hash地址')   //跳转到指定的URl页面
+this.$router.go(n)  //n为1前进 为-1后退 b
+
+//router.push的用法
+router.push('hash地址') //到指定url页面
+router.push({path:'/home'})  //对象方式的url
+router.push({name:'.user',params:{userId:123}}) //命名路由的传参
+router.push({path:'/register',query:{uname:'lisi'}}) //待查询参数变成/register?uname=list
+````
+
+# 模块化导入导出
+
+```js
+export{} //导出   export let name= 'wany'
+import{} //导入
+
+export default //能够自己命名 只能有一个default
+import ml from '路径'
+comentJs	
+```
+
+# 单文件vue

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function test() {
+            const a = 10;
+            return function fn() {
+                console.log(a);
+            }
+        }
+        const myfn = test();
+        myfn()
+        test()
+            //1.区分作用域 :利用函数作用域及闭包特性可以区分局部作用域防止变量污染
+            //2.让外部可以访问内部变量
+            //3.缓存特性:可以利用闭包来缓存变量
+
+        //在使用缓存特性时候需要注意缓存的局部变量会常驻内存，会造成内存泄露。所以在使用的过程中可以手动的将不需要的局部变量删除
+    </script>
+</body>
+
+</html>

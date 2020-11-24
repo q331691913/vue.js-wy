@@ -2,10 +2,10 @@ const express = require('express');
 const path = require('path');
 const router = require('./router.js');
 const bodyParser = require('body-parser');
-// const cors = express('cors')
+const cors = express('cors')
 const app = express();
-// app.use(cors())
-// 启动静态资源服务
+app.use(cors())
+    // 启动静态资源服务
 app.use(express.static('public'));
 
 // 处理请求参数
